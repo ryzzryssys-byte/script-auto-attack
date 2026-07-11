@@ -1,7 +1,7 @@
--- Memuat UI Library (Orion)
-local OrionLib = loadstring(game:HttpGet(("https://githubusercontent.com")))()
+-- Memuat UI Library (Orion Alternatif yang Lebih Stabil)
+local OrionLib = loadstring(game:HttpGet('https://githubusercontent.com'))()
 
--- Membuat Jendela Menu Utama (Akan langsung muncul di layar)
+-- Membuat Jendela Menu Utama
 local Window = OrionLib:MakeWindow({
     Name = "Ryzz Auto Attack v1.0", 
     HidePremium = true, 
@@ -20,7 +20,7 @@ local Tab = Window:MakeTab({
 local NAMA_SENJATA = "Staf Magma"
 local RADIUS_SERANG = 250
 local JEDA_SERANG = 0.5
-_G.AutoAttackActive = false -- Status awal mati
+_G.AutoAttackActive = false 
 
 -- Fungsi mencari musuh terdekat
 local function cariMusuhTerdekat()
@@ -48,14 +48,13 @@ local function cariMusuhTerdekat()
     return targetTerdekat
 end
 
--- Membuat Tombol Sakelar (Toggle) ON/OFF di dalam Menu UI
+-- Tombol Sakelar Toggle ON/OFF
 Tab:AddToggle({
     Name = "Auto Attack (Staf Magma)",
     Default = false,
     Callback = function(Value)
         _G.AutoAttackActive = Value
         
-        -- Jika tombol diubah ke ON (true), jalankan fungsi menyerang
         if Value then
             task.spawn(function()
                 while _G.AutoAttackActive do
@@ -63,34 +62,29 @@ Tab:AddToggle({
                     local karakter = LocalPlayer.Character
                     
                     if karakter and karakter:FindFirstChild("Humanoid") and karakter.Humanoid.Health > 0 then
-                        -- Ambil Staf Magma secara otomatis
                         local tool = karakter:FindFirstChild(NAMA_SENJATA) or LocalPlayer.Backpack:FindFirstChild(NAMA_SENJATA)
                         if tool then
                             if tool.Parent == LocalPlayer.Backpack then
                                 tool.Parent = karakter
                             end
                             
-                            -- Cari musuh terdekat
                             local musuh = cariMusuhTerdekat()
                             if musuh and musuh:FindFirstChild("HumanoidRootPart") then
-                                -- Karakter otomatis menghadap ke musuh
                                 local posisiMusuh = musuh.HumanoidRootPart.Position
                                 karakter.HumanoidRootPart.CFrame = CFrame.new(
                                     karakter.HumanoidRootPart.Position, 
                                     Vector3.new(posisiMusuh.X, karakter.HumanoidRootPart.Position.Y, posisiMusuh.Z)
                                 )
-                                
-                                -- Eksekusi serangan
                                 tool:Activate()
                             end
                         end
                     end
-                    task.wait(JEDA_SERANG) -- Cooldown 0.5 detik
+                    task.wait(JEDA_SERANG)
                 end
             end)
         end
     end    
 })
 
--- Menginisialisasi UI agar muncul di layar
 OrionLib:Init()
+
